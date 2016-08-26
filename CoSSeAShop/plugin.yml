@@ -1,33 +1,8 @@
 name: CoSSeAShop
 main: CoSSeSystem\CoSSeAShop
-version: 3.0.0
+version: 0.1
 api: [2.0.0]
 load: POSTWORLD
 author: popkechupki
 description: Open admin's shop
-website: https://github.com/
-
-commands:
- id:
-  description: Search item ID
-  usage: "Usage: /id <itemname>"
-  permission: chestshop.command.id
- remove:
-  description: Remove the player's ChestShop
-  usage: "Usage: /remove <username>"
-  permission: chestshop.command.remove
-permissions:
- chestshop:
-  default: op
-  description: "Allows using all the ChestShop things"
-  children:
-   chestshop.command:
-    default: op
-    description: "Allows using all the PocketMoney commands"
-    children:
-     chestshop.command.id:
-      default: true
-      description: "Allows searching item ID"
-     chestshop.command.remove:
-      default: op
-      description: "Allows removing player's ChestShop"
+website: https://github.com/CosmoSunriseServerPluginEditorsTeam/CoSSeAShop
