@@ -5,7 +5,6 @@ namespace CoSSeSystem;
 /*
 Cosmo Sunrise Server's AdminShop System.
 Development start date: 2016/08/24
-Last up date: 2016/08/24
 
 このプラグインはpopke LISENCEを理解および同意した上で使用する事。
 また、無駄なコードはことごとく排除するよう書く事を心がける事。
@@ -55,7 +54,7 @@ class CoSSeAShop extends PluginBase implements Listener {
 			}
 		}
 	}
-
+/*
 	function onInteract(PlayerInteractEvent $event) {
 		$player = $event->getPlayer();
 		$user = $player->getName();
@@ -90,7 +89,7 @@ class CoSSeAShop extends PluginBase implements Listener {
 			}
 		}
 	}
-
+*/
 	function onSignChange(SignChangeEvent $event) {
 		$player = $event->getPlayer();
 		$key = $event->getLine(0);
