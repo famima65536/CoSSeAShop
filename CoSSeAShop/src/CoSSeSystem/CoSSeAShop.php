@@ -5,7 +5,6 @@ namespace CoSSeSystem;
 /*
 Cosmo Sunrise Server's AdminShop System.
 Development start date: 2016/08/24
-Last up date: 2016/08/24
 
 このプラグインはpopke LISENCEを理解および同意した上で使用する事。
 また、無駄なコードはことごとく排除するよう書く事を心がける事。
@@ -73,8 +72,8 @@ class CoSSeAShop extends PluginBase implements Listener {
 				if ($text[0]  == "§6§lADMINSHOP") {
 					$CMA = $this->CMA->getMoney($user);
 					$p3 = explode(": ",$text[3]);
-					$price = $p3;
-					if($CMA < $price) {
+					$price = $p3[1];
+					if($price < $CMA) {
 						$p1 = explode(": ", $text[1]);
 						$p = explode(".", $p1[1]);
 						$pid = $p[0];
@@ -90,6 +89,8 @@ class CoSSeAShop extends PluginBase implements Listener {
 						}else{
 							$player->sendMessage("[§aCoSSe§f]"."\n".TF::RED."インベントリがいっぱいで購入できません！");
 						}
+					}else{
+						$player->sendMessage("[§aCoSSe§f]"."\n".TF::RED."所持金が足りないため購入できません！");
 					}
 				}
 			}
