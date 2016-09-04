@@ -5,6 +5,7 @@ namespace CoSSeSystem;
 /*
 Cosmo Sunrise Server's AdminShop System.
 Development start date: 2016/08/24
+Last up date: 2016/08/24
 
 このプラグインはpopke LISENCEを理解および同意した上で使用する事。
 また、無駄なコードはことごとく排除するよう書く事を心がける事。
@@ -40,10 +41,15 @@ class CoSSeAShop extends PluginBase implements Listener {
 		$block = $event->getBlock();
 		$blockID = $block->getID();
 		if($blockID == "63" or $blockID == "68") {
+			$tile = $event->getBlock()->getLevel()->getTile($block);
 			if($player->isOP()) {
-				$player->sendMessage("[§aCoSSe§f]"."\n"."ADMINSHOPを壊しました。");
+				if ($tile instanceof Sign) {
+					$text = $tile->getText();
+					if ($text[0] == "§6§lADMINSHOP") {
+						$player->sendMessage("[§aCoSSe§f]"."\n"."ADMINSHOPを壊しました。");
+					}
+				}
 			}else{
-				$tile = $event->getBlock()->getLevel()->getTile($block);
 				if ($tile instanceof Sign) {
 					$text = $tile->getText();
 					$tile->setText($text[0], $text[1], $text[2], $text[3]);
@@ -54,7 +60,7 @@ class CoSSeAShop extends PluginBase implements Listener {
 			}
 		}
 	}
-/*
+
 	function onInteract(PlayerInteractEvent $event) {
 		$player = $event->getPlayer();
 		$user = $player->getName();
@@ -69,17 +75,17 @@ class CoSSeAShop extends PluginBase implements Listener {
 					$p3 = explode(": ",$text[3]);
 					$price = $p3;
 					if($CMA < $price) {
-						$p = explode(",", $text[1]);
-						$pid = intval($p[0]);
-						$pmeta = intval($p[1]);
+						$p1 = explode(": ", $text[1]);
+						$p = explode(".", $p1[1]);
+						$pid = $p[0];
+						$pmeta = $p[1];
 						$p2 = explode(": ", $text[2]);
-						$amount = intval($p2[1]);
+						$amount = $p2[1];
 						$iName = Block::get($pid)->getName();
 						$item = Item::get($pid, $pmeta, $amount);
-						$prize = intval($price);
 						if(($player->getInventory())->canAddItem($item)) {
 							$player->getInventory()->addItem($item);
-							$this->CMA->addMoney($user, -$prize);
+							$this->CMA->addMoney($user, - $price);
 							$player->sendMessage("[§aCoSSe§f]"."\n"."{$iName}を{$amount}個購入しました。");
 						}else{
 							$player->sendMessage("[§aCoSSe§f]"."\n".TF::RED."インベントリがいっぱいで購入できません！");
@@ -89,7 +95,7 @@ class CoSSeAShop extends PluginBase implements Listener {
 			}
 		}
 	}
-*/
+
 	function onSignChange(SignChangeEvent $event) {
 		$player = $event->getPlayer();
 		$key = $event->getLine(0);
@@ -102,7 +108,7 @@ class CoSSeAShop extends PluginBase implements Listener {
 					$pmeta = $p[1];
 					$iName = Block::get($pid)->getName();
 					$event->setLine(0, "§6§lADMINSHOP");
-					$event->setLine(1, "{$iName} : {$pid},{$pmeta}");
+					$event->setLine(1, "{$iName} : {$pid}.{$pmeta}");
 					$event->setLine(2, "取引量 : {$amount}");
 					$event->setLine(3, "取引値 : {$price}");
 					$player->sendMessage("[§aCoSSe§f]"."\n"."§bAdmiShopを作成しました。"."$iName : {$pid},{$pmeta}", "取引量 : {$amount}", "取引値 : {$price}");
