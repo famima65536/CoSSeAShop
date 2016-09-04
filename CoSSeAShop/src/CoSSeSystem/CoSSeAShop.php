@@ -39,23 +39,18 @@ class CoSSeAShop extends PluginBase implements Listener {
 		$player = $event->getPlayer();
 		$block = $event->getBlock();
 		$blockID = $block->getID();
-		if($blockID == "63" or $blockID == "68") {
+		if ($blockID == "63" or $blockID == "68") {
 			$tile = $event->getBlock()->getLevel()->getTile($block);
-			if($player->isOP()) {
-				if ($tile instanceof Sign) {
-					$text = $tile->getText();
+			if ($tile instanceof Sign) {
+				$text = $tile->getText();
+				if ($player->isOP()) {
 					if ($text[0] == "§6§lADMINSHOP") {
 						$player->sendMessage("[§aCoSSe§f]"."\n"."ADMINSHOPを壊しました。");
 					}
+				} else {
+					$event->setCancelled();
+					$player->sendMessage("[§aCoSSe§f]"."\n"."ADMINSHOPはOperator権限者しか破壊できません。");
 				}
-			}else{
-				if ($tile instanceof Sign) {
-					$text = $tile->getText();
-					$tile->setText($text[0], $text[1], $text[2], $text[3]);
-					$tile->saveNBT();
-				}
-				$event->setCancelled();
-				$player->sendMessage("[§aCoSSe§f]"."\n"."ADMINSHOPはOperator権限者しか破壊できません。");
 			}
 		}
 	}
