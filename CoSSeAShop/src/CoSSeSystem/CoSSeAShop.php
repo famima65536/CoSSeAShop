@@ -107,9 +107,9 @@ class CoSSeAShop extends PluginBase implements Listener {
 					$event->setLine(1, "{$iName} : {$pid}.{$pmeta}");
 					$event->setLine(2, "取引量 : {$amount}");
 					$event->setLine(3, "取引値 : {$price}");
-					$player->sendMessage("[§aCoSSe§f]"."\n"."§bAdmiShopを作成しました。"."$iName : {$pid},{$pmeta}", "取引量 : {$amount}", "取引値 : {$price}");
+					$player->sendMessage("[§aCoSSe§f]"."\n"."AdmiShopを作成しました！"."\n"."$iName : $pid . $pmeta 取引量 : $amount 取引値 : $price");
 				}else{
-					$player->sendMessage("[§aCoSSe§f]"."\n"."§cOP以外はAdminShopを作成できません。");
+					$player->sendMessage("[§aCoSSe§f]"."\n".TF::RED."OP以外はAdminShopを作成できません。");
 				}
 			}
 	}
