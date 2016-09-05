@@ -94,21 +94,36 @@ class CoSSeAShop extends PluginBase implements Listener {
 
 	function onSignChange(SignChangeEvent $event) {
 		$player = $event->getPlayer();
+		$lines = $e->getLines();
 		$key = $event->getLine(0);
 			if($key == "ashop") {
 				if($player->isOP()) {
-					$amount = $event->getLine(1);
-					$price = $event->getLine(2);
-					$p = explode(":", $event->getLine(3));
-					$pid = $p[0];
-					$pmeta = $p[1];
-					$iName = Block::get($pid)->getName();
-					$event->setLine(0, "§6§lADMINSHOP");
-					$event->setLine(1, "{$iName} : {$pid}.{$pmeta}");
-					$event->setLine(2, "取引量 : {$amount}");
-					$event->setLine(3, "取引値 : {$price}");
-					$player->sendMessage("[§aCoSSe§f]"."\n"."AdmiShopを作成しました！"."\n"."$iName : $pid . $pmeta 取引量 : $amount 取引値 : $price");
-				}else{
+					if(is_numeric($lines[2]) and is_numeric($lines[3])  and (preg_match('/^[0-9]+:[0-9]+$/', $lines[3]) or is_numeric($lines[3])) )
+					{
+						if(!is_numeric($lines[3]))
+						{
+							$itemd = explode(":",$lines[3]);
+							$item = Item::get($itemd[0], $itemd[1], $lines[1]);
+						}else{
+							$item =Item::get($lines[3], 0, $lines[1]);
+						}
+						
+				
+						$price = $lines[2];
+						$amount = $lines[1];
+						$p = [$item->getID(), $item->getDamage()];
+						$pid = $p[0];
+						$pmeta = $p[1];
+						$event->setLine(0, "§6§lADMINSHOP");
+						$event->setLine(1, "{$iName} : {$pid}.{$pmeta}");
+						$event->setLine(2, "取引量 : {$amount}");
+						$event->setLine(3, "取引値 : {$price}");
+						$player->sendMessage("[§aCoSSe§f]"."\n"."AdmiShopを作成しました！"."\n"."$item->getName() : $pid . $pmeta 取引量 : $amount 取引値 : $price");
+				
+						}else{
+							$player->sendMessage("[§aCoSSe§f]"."\n".TF::RED."情報をきちんと入力してください");
+						}
+					}else{
 					$player->sendMessage("[§aCoSSe§f]"."\n".TF::RED."OP以外はAdminShopを作成できません。");
 				}
 			}
